@@ -1,0 +1,48 @@
+{
+    "name": "@framefactory/cgui",
+    "version": "0.1.0",
+    "description": "FF UI Typescript Foundation Library",
+    "keywords": [
+        "typescript",
+        "webcomponents",
+        "ui"
+    ],
+    "type": "commonjs",
+    "exports": {
+        "./cjs/": "./dist/exports/",
+        "./": "./src/"
+    },
+    "scripts": {
+        "build": "tsc",
+        "clean": "(rimraf dist && mkdirp dist) || exit 1",
+        "test": "tsc -b test; mocha -c --ui tdd dist/test/test.js || exit 0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/framefactory/ff-cgui.git"
+    },
+    "author": {
+        "name": "Ralph Wiedemeier",
+        "email": "opensource@framefactory.ch",
+        "url": "https://github.com/framefactory"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/framefactory/ff-cgui/issues"
+    },
+    "homepage": "https://github.com/framefactory/ff-cgui#readme",
+    "dependencies": {
+        "lit-element": "^2.5.1",
+        "lit-html": "^1.4.1"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.2.17",
+        "@types/mocha": "^8.2.2",
+        "chai": "^4.3.4",
+        "mkdirp": "^1.0.4",
+        "mocha": "^8.3.2",
+        "module-alias": "^2.2.2",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.2.4"
+    }
+}
