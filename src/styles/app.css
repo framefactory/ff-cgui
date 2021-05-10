@@ -1,0 +1,36 @@
+/**
+ * FF Typescript Foundation Library
+ * Copyright 2021 Ralph Wiedemeier, Frame Factory GmbH
+ *
+ * License: MIT
+ */
+
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+body {
+    /* --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    --font-ui: 'Open Sans', sans-serif;
+
+    --gap-xs: 0.125em;
+    --gap-sm: 0.25em;
+    --gap-md: 0.5em;
+    --gap-lg: 1em;
+    --gap-xl: 2em;
+
+    --font-xs: 0.7em;
+    --font-sm: 0.85em;
+    --font-md: 1em;
+    --font-lg: 1.5em;
+    --font-xl: 2em;
+    --font-xxl: 3em;
+
+    --button-color-bg: var(--color-bg-300);
+    --button-color-bg-hover: var(--color-bg-100);
+    --button-color-bg-disabled: var(--color-bg-400);
+    --button-color-text: var(--color-fg-500);
+    --button-color-text-disabled: var(--color-fg-900);
+    --button-border-radius: 0.25em;
+
+    --icon-color: var(--color-fg-700);
+}
+

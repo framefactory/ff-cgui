@@ -1,0 +1,60 @@
+/**
+ * FF Typescript Foundation Library
+ * Copyright 2021 Ralph Wiedemeier, Frame Factory GmbH
+ *
+ * License: MIT
+ */
+
+/**
+ * https://www.tailwindshades.com
+ * bg: +4, -4
+ * fg: +4 (100 = #ffffff), -7
+ * primary, secondary: +7, -7
+ */
+
+body {
+--color-primary-100: #F8A9B9;
+--color-primary-200: #F5889E;
+--color-primary-300: #F26784;
+--color-primary-400: #F04669;
+--color-primary-500: #ED254E;
+--color-primary-600: #DC123C;
+--color-primary-700: #BB0F33;
+--color-primary-800: #9A0D2A;
+--color-primary-900: #790A21;
+
+--color-secondary-100: #F8A9B9;
+--color-secondary-200: #F5889E;
+--color-secondary-300: #F26784;
+--color-secondary-400: #F04669;
+--color-secondary-500: #ED254E;
+--color-secondary-600: #DC123C;
+--color-secondary-700: #BB0F33;
+--color-secondary-800: #9A0D2A;
+--color-secondary-900: #790A21;
+
+--color-bg-100: #696969;
+--color-bg-200: #5E5E5E;
+--color-bg-300: #545454;
+--color-bg-400: #4A4A4A;
+--color-bg-500: #404040;
+--color-bg-600: #363636;
+--color-bg-700: #2B2B2B;
+--color-bg-800: #212121;
+--color-bg-900: #171717;
+
+--color-fg-100: #FFFFFF;
+--color-fg-200: #F5F5F5;
+--color-fg-300: #EBEBEB;
+--color-fg-400: #E0E0E0;
+--color-fg-500: #D6D6D6;
+--color-fg-600: #C4C4C4;
+--color-fg-700: #B3B3B3;
+--color-fg-800: #A1A1A1;
+--color-fg-900: #8F8F8F;
+
+--color-text: var(--color-fg-500);
+--color-text-dimmed: var(--color-fg-900);
+
+--font-default: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

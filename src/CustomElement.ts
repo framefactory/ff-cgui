@@ -5,7 +5,7 @@
  * License: MIT
  */
 
-import { LitElement, CSSResult } from "lit-element";
+import { LitElement } from "lit-element";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -15,26 +15,17 @@ export { classMap } from 'lit-html/directives/class-map';
 
 export default class CustomElement extends LitElement
 {
-    static readonly styles: CSSResult = undefined;
-
     protected static readonly shady: boolean = true;
-    protected static readonly classes: string | string[] = "";
+
+    /** 
+     * Sets the given styles at the given element.
+     */
+    static setStyle(element: HTMLElement, style: Partial<CSSStyleDeclaration>)
+    {
+        Object.assign(element.style, style);
+    }
 
     private _isFirstConnected = false;
-
-    constructor()
-    {
-        super();
-        // note: attributes haven't yet been set in constructor
-
-        const classes = (this.constructor as typeof CustomElement).classes;
-        if (Array.isArray(classes)) {
-            classes.forEach(c => this.addClass(c));
-        }
-        else if (classes) {
-            this.addClass(classes);
-        }
-    }
 
     /**
      * Returns true if this element is using shadow DOM.
@@ -42,32 +33,22 @@ export default class CustomElement extends LitElement
     get shady()
     {
         return (this.constructor as typeof CustomElement).shady;
-    }    
-
-    addClass(...classes: string[]): this
+    }
+    
+    setStyle(style: Partial<CSSStyleDeclaration>): this
     {
-        classes.forEach(klass => this.classList.add(klass));
+        CustomElement.setStyle(this, style);
         return this;
     }
 
-    removeClass(...classes: string[]): this
+    /**
+     * Returns true if this element is the focused element of the document.
+     */
+    hasFocus()
     {
-        classes.forEach(klass => this.classList.remove(klass));
-        return this;
+        return document.activeElement === this;
     }
-
-    setClass(name: string, state: boolean): this
-    {
-        if (state) {
-            this.classList.add(name);
-        }
-        else {
-            this.classList.remove(name);
-        }
-
-        return this;
-    }
-
+    
     /**
      * Attaches an event listener to this element.
      * This is a convenience method for 'addEventListener'.
@@ -88,15 +69,6 @@ export default class CustomElement extends LitElement
     {
         this.removeEventListener(type, listener, options);
         return this;
-    }
-
-    /**
-     * Dispatches a custom event of the given type.
-     * The detail information is available on the event as 'event.detail'.
-     */
-    emit<T extends CustomEvent = CustomEvent>(type: string, detail: T["detail"])
-    {
-        this.dispatchEvent(new CustomEvent(type, { detail }));
     }
 
     connectedCallback()
