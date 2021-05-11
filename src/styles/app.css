@@ -10,12 +10,15 @@
 body {
     /* --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
     --font-ui: 'Open Sans', sans-serif;
+    --border-radius: 0.25em;
 
+    --gap-xxs: 1px;
     --gap-xs: 0.125em;
     --gap-sm: 0.25em;
     --gap-md: 0.5em;
     --gap-lg: 1em;
     --gap-xl: 2em;
+    --gap-xxl: 3em;
 
     --font-xs: 0.7em;
     --font-sm: 0.85em;
@@ -29,7 +32,6 @@ body {
     --button-color-bg-disabled: var(--color-bg-400);
     --button-color-text: var(--color-fg-500);
     --button-color-text-disabled: var(--color-fg-900);
-    --button-border-radius: 0.25em;
 
     --icon-color: var(--color-fg-700);
 }

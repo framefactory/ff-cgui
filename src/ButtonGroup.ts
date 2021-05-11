@@ -10,7 +10,7 @@ import Button from "./Button";
 
 ////////////////////////////////////////////////////////////////////////////////
 
-export type ButtonGroupMode = "exclusive" | "radio";
+export type ButtonGroupMode = "exclusive" | "radio" | "select";
 
 @customElement("ff-button-group")
 export default class ButtonGroup extends CustomElement
@@ -29,8 +29,8 @@ export default class ButtonGroup extends CustomElement
     constructor()
     {
         super();
-
         this.addEventListener("click", (e) => this.onClick(e));
+        this.style.display = "contents";
     }
 
     protected firstConnected()
@@ -69,7 +69,7 @@ export default class ButtonGroup extends CustomElement
         }
 
         if (target.selected) {
-            if (this.mode === "exclusive") {
+            if (this.mode !== "radio") {
                 target.selected = false;
                 this._selectedButton = null;
                 this.selectionIndex = -1;

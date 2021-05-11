@@ -5,43 +5,55 @@
  * License: MIT
  */
 
-import CustomElement, { customElement, property, PropertyValues, html, css } from "./CustomElement";
+import CustomElement, {
+    customElement, 
+    property, 
+    PropertyValues, 
+    html, 
+    css,
+    sizes,
+} from "./CustomElement";
 
 ////////////////////////////////////////////////////////////////////////////////
 
 @customElement("ff-flex")
 export default class Flex extends CustomElement
 {
-    protected static readonly shady = false;
+    static readonly styles = css`
+        :host {
+            display: flex;
+        }
+    `;
 
     @property({ type: Boolean })
     vertical = false;
 
     @property({ type: String })
-    padding = "";
+    pad: string = undefined;
 
-    constructor()
-    {
-        super();
-        this.style.display = "flex";
-    }
+    @property({ type: String })
+    gap: string = undefined;
 
     protected update(changed: PropertyValues)
     {
         if (changed.has("vertical")) {
+            console.log(this.vertical);
             this.style.flexDirection = this.vertical ? "column" : "row";
         }
-        if (changed.has("padding")) {
-            const padding = this.padding;
-            if (["xs", "sm", "md", "lg", "xl"].includes(padding)) {
-                const formattedValue = `var(--gap-${this.padding})`; 
-                this.style.padding = formattedValue;
-                this.style.setProperty("--control-padding", formattedValue);
-            }
-            else if (padding) {
-                this.style.padding = padding;
-                this.style.setProperty("--control-padding", padding);
-            }
+        if (changed.has("pad")) {
+            const pad = sizes.includes(this.pad) ? `var(--gap-${this.pad})` : this.pad;
+            this.style.padding = pad;
         }
+        if (changed.has("gap")) {
+            const gap = sizes.includes(this.gap) ? `var(--gap-${this.gap})` : this.gap;
+            this.style.setProperty("--control-margin", gap);
+        }
+
+        super.update(changed);
+    }
+
+    protected render()
+    {
+        return html`<slot></slot>`;
     }
 }

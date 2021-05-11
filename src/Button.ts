@@ -10,7 +10,8 @@ import CustomElement, {
     property, 
     PropertyValues,
     html, 
-    css 
+    css,
+    sizes,
 } from "./CustomElement";
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,54 +21,91 @@ export default class Button extends CustomElement
 {
     static readonly styles = css`
         :host {
-            display: inline-block;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: var(--control-margin, 0);
+            padding: 0.5em;
+            background-color: var(--color-bg-300, transparent);
+            color: var(--color-fg-500, inherit);
+            border-radius: var(--border-radius, 0);
             cursor: pointer;
-            margin: var(--control-padding, 0);
-            background-color: var(--button-color-bg, transparent);
-            color: var(--button-color-text, inherit);
-            border-radius: var(--button-border-radius, 0);
-            text-align: center;
-            vertical-align: middle;
+        }
+        :host([vertical]) {
+            flex-direction: column;
+            justify-content: center;            
         }
         :host(:hover) {
-            background-color: var(--button-color-bg-hover, transparent);
+            background-color: var(--color-bg-200, transparent);
         }
         :host([disabled]) {
             background-color: var(--button-color-bg-disabled, transparent);
             color: var(--button-color-text-disabled, inherit);
         }
+        :host([selected]) {
+            background-color: var(--color-primary-500, transparent);
+            color: var(--color-fg-300, inherit);
+        }
+        :host(.transparent) {
+            padding: 0;
+            background-color: transparent;
+            color: var(--color-fg-700, inherit);
+        }
+        :host(.transparent:hover) {
+            color: var(--color-fg-500, inherit);
+        }
+        :host(.transparent[selected]) {
+            background-color: transparent;
+            color: var(--color-fg-100, inherit);
+        }
+
+        ::slotted(*) {
+            margin: 0.25em;
+            pointer-events: none;
+        }
+
         ::slotted(ff-icon) {
-            margin: 0.5em;
+            fill: var(--color-fg-700, inherit);
+        }
+        :host(.transparent:hover) ::slotted(ff-icon) {
+            fill: var(--color-fg-500, inherit);
+        }
+        :host(.transparent[selected]) ::slotted(ff-icon) {
+            fill: var(--color-fg-100, inherit);
         }
     `;
 
-    /** Optional name to identify the button. */
+    /** Optional key to identify the button. */
     @property({ type: String })
-    name = "";
+    key = undefined;
 
-    /** Optional index to identify the button. */
-    @property({ type: Number })
-    index = 0;
-
-    @property({ type: Number })
-    selectedIndex = -1;
+    @property({ type: String })
+    selectedKey = undefined;
 
     /** If true, adds "ff-selected" class to element. */
     @property({ type: Boolean, reflect: true })
     selected = false;
 
     /** If true, toggles selected state every time the button is clicked. */
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true })
     selectable = false;
 
     @property({ type: Boolean })
     disabled = false;
 
     @property({ type: String })
-    variant = "";
-
-    @property({ type: String })
     size = "";
+
+    @property({ type: Boolean })
+    vertical = false;
+
+    @property({ type: Boolean })
+    transparent = false;
+
+    @property()
+    grow = undefined;
+
 
     constructor()
     {
@@ -75,19 +113,35 @@ export default class Button extends CustomElement
 
         this.on("click", (e) => this.onClick(e));
         this.on("keydown", (e) => this.onKeyDown(e));
+
+        this.tabIndex = 0;
+    }
+
+    protected shouldUpdate(changedProperties: PropertyValues)
+    {
+        if (changedProperties.has("key") || changedProperties.has("selectedKey")) {
+            if (this.key) {
+                this.selected = this.key === this.selectedKey;
+            }
+        }
+
+        return true;
     }
 
     protected update(changed: PropertyValues)
     {
-        if (changed.has("variant")) {
-            const variant = this.variant;
-            this.style.flex = variant === "flex" ? "1" : "0";
+        if (changed.has("transparent")) {
+            this.classList.toggle("transparent", this.transparent);
         }   
+        if (changed.has("grow")) {
+            let grow = this.grow !== undefined ? parseInt(this.grow) : 0;
+            grow = isNaN(grow) ? 1 : grow;
+            this.style.flexGrow = grow.toString();
+        }
         if (changed.has("size")) {
             const size = this.size;
             if (size) {
-                if ([ "xl", "lg", "md", "sm", "xs" ].includes(size)) {
-                    this.style.padding = `var(--gap-${size})`;
+                if (sizes.includes(size)) {
                     this.style.fontSize = `var(--font-${size})`;
                 }    
             }

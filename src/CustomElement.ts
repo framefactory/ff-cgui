@@ -13,6 +13,8 @@ export { customElement, property, query, queryAll, css, CSSResult, PropertyValue
 export { html, svg, render, TemplateResult } from "lit-html";
 export { classMap } from 'lit-html/directives/class-map';
 
+export const sizes = [ "xxl", "xl", "lg", "md", "sm", "xs", "xxs" ];
+
 export default class CustomElement extends LitElement
 {
     protected static readonly shady: boolean = true;
@@ -53,21 +55,14 @@ export default class CustomElement extends LitElement
      * Attaches an event listener to this element.
      * This is a convenience method for 'addEventListener'.
      */
-    on<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-    on(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) 
+    on<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, target?: object, options?: boolean | AddEventListenerOptions): void;
+    on(type: string, listener: EventListener, target?: object, options?: boolean | AddEventListenerOptions) 
     {
-        this.addEventListener(type, listener, options);
-        return this;
-    }
+        if (target) {
+            listener = listener.bind(target);
+        }
 
-    /**
-     * Removes an event listener from this element.
-     * This is a convenience alias for 'removeEventListener'.
-     */
-    off<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-    off(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions)
-    {
-        this.removeEventListener(type, listener, options);
+        this.addEventListener(type, listener, options);
         return this;
     }
 
