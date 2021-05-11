@@ -16,6 +16,12 @@ import CustomElement, {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+export interface IButtonClickEvent extends MouseEvent
+{
+    type: "click",
+    target: Button;
+}
+
 @customElement("ff-button")
 export default class Button extends CustomElement
 {
@@ -111,8 +117,8 @@ export default class Button extends CustomElement
     {
         super();
 
-        this.on("click", (e) => this.onClick(e));
-        this.on("keydown", (e) => this.onKeyDown(e));
+        this.on("click", this.onClick, this);
+        this.on("keydown", this.onKeyDown, this);
 
         this.tabIndex = 0;
     }
@@ -154,7 +160,7 @@ export default class Button extends CustomElement
         return html`<slot>Button</slot>`;
     }
 
-    protected onClick(event: MouseEvent)
+    protected onClick()
     {
         if (this.selectable) {
             this.selected = !this.selected;

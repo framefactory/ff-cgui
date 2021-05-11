@@ -5,11 +5,11 @@
  * License: MIT
  */
 
- @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap'); */
 
 body {
     /* --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
-    --font-ui: 'Open Sans', sans-serif;
+    /* --font-ui: 'Open Sans', sans-serif; */
     --border-radius: 0.25em;
 
     --gap-xxs: 1px;

@@ -5,18 +5,17 @@
  * License: MIT
  */
 
-import CustomElement, { customElement, property } from "./CustomElement";
+import { customElement, property } from "./CustomElement";
 import Button from "./Button";
+import Flex from "./Flex";
 
 ////////////////////////////////////////////////////////////////////////////////
 
 export type ButtonGroupMode = "exclusive" | "radio" | "select";
 
 @customElement("ff-button-group")
-export default class ButtonGroup extends CustomElement
+export default class ButtonGroup extends Flex
 {
-    protected static readonly shady = false;
-
     @property({ type: String })
     mode: ButtonGroupMode = "radio";
 
@@ -29,8 +28,9 @@ export default class ButtonGroup extends CustomElement
     constructor()
     {
         super();
-        this.addEventListener("click", (e) => this.onClick(e));
-        this.style.display = "contents";
+
+        this.on("click", this.onClick, this);
+        this.wrap = true;
     }
 
     protected firstConnected()
@@ -65,6 +65,7 @@ export default class ButtonGroup extends CustomElement
         }
 
         if (!(target instanceof Button)) {
+            event.stopImmediatePropagation();
             return;
         }
 

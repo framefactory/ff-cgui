@@ -9,8 +9,6 @@ import CustomElement, {
     customElement, 
     property, 
     PropertyValues, 
-    html, 
-    css,
     sizes,
 } from "./CustomElement";
 
@@ -19,14 +17,19 @@ import CustomElement, {
 @customElement("ff-flex")
 export default class Flex extends CustomElement
 {
-    static readonly styles = css`
-        :host {
-            display: flex;
-        }
-    `;
+    protected static readonly shady = false;
 
     @property({ type: Boolean })
     vertical = false;
+
+    @property({ type: Boolean })
+    wrap = false;
+
+    @property({ type: String })
+    main = "flex-start";
+
+    @property({ type: String })
+    cross = "stretch";
 
     @property({ type: String })
     pad: string = undefined;
@@ -34,11 +37,25 @@ export default class Flex extends CustomElement
     @property({ type: String })
     gap: string = undefined;
 
+    constructor()
+    {
+        super();
+        this.style.display = "flex";
+    }
+
     protected update(changed: PropertyValues)
     {
         if (changed.has("vertical")) {
-            console.log(this.vertical);
             this.style.flexDirection = this.vertical ? "column" : "row";
+        }
+        if (changed.has("wrap")) {
+            this.style.flexWrap = this.wrap ? "wrap" : "nowrap";
+        }
+        if (changed.has("main")) {
+            this.style.justifyContent = this.main;
+        }
+        if (changed.has("cross")) {
+            this.style.alignItems = this.cross;
         }
         if (changed.has("pad")) {
             const pad = sizes.includes(this.pad) ? `var(--gap-${this.pad})` : this.pad;
@@ -50,10 +67,5 @@ export default class Flex extends CustomElement
         }
 
         super.update(changed);
-    }
-
-    protected render()
-    {
-        return html`<slot></slot>`;
     }
 }

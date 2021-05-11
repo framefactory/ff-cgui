@@ -18,14 +18,16 @@ export default class Menu extends CustomElement
 {
     static readonly styles = css`
         :host {
+            width: max-content;
+            min-width: 100%;
             display: flex;
             flex-direction: column;
             background-color: var(--color-bg-300);
-            width: max-content;
             pointer-events: auto !important;
         }
 
-        ::slotted(*) {
+        ::slotted(ff-button) {
+            margin: 0;
             padding: 0.5em 1em;
             background-color: transparent;
             border-radius: 0;

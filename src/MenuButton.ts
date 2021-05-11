@@ -31,9 +31,11 @@ export default class MenuButton extends Button
             :host ::slotted(ff-menu) {
                 display: none;
                 position: absolute;
+                z-index: 1;
                 top: 100%;
                 left: 0;
                 margin: 2px 0;
+                box-shadow: 0 4px 12px black;
             }
         `,
     ] as any;
